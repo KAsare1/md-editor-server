@@ -4,8 +4,8 @@ const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const documentRoutes = require('./routes/documentRoutes');
 const authenticate = require('./middleware/authenticate');
-const http = require('http'); // Import http module for the server
-const socketIo = require('socket.io'); // Import socket.io
+const http = require('http'); 
+const socketIo = require('socket.io'); 
 const cors = require('cors');
 
 dotenv.config();
@@ -31,16 +31,16 @@ const io = socketIo(server, {
   }
 });
 
-// Connect to MongoDB
+
 connectDB();
 
 app.use(express.json());
 
-// Register authentication routes
+
 app.use('/api/auth', authRoutes);
 app.use('/api/documents', documentRoutes);
 
-// Protected route example
+
 app.get('/api/protected', authenticate, (req, res) => {
   if (!req.auth) {
     return res.status(401).json({ message: 'User not authenticated' });
@@ -52,8 +52,8 @@ app.get('/api/protected', authenticate, (req, res) => {
   });
 });
 
-// Set up Socket.IO events
-let documentConnections = {}; // To track users in specific document rooms
+
+let documentConnections = {}; 
 
 io.on('connection', (socket) => {
   console.log('User connected:', socket.id);
@@ -99,7 +99,7 @@ io.on('connection', (socket) => {
   });
 });
 
-// Start the server with Socket.IO integration
+
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
